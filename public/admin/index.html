@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Admin · Smart Vending Machine Store</title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body>
+
+  <!-- ============================ LOGIN ============================ -->
+  <div class="login" id="loginView">
+    <form class="login__card" id="loginForm" autocomplete="on">
+      <div class="login__logo" aria-hidden="true">⚙️</div>
+      <h1>Admin Login</h1>
+      <p class="login__sub">Smart Vending Machine Store</p>
+
+      <label class="field">
+        <span>Username</span>
+        <input id="username" name="username" autocomplete="username" required />
+      </label>
+
+      <label class="field">
+        <span>Password</span>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+      </label>
+
+      <p class="form-error" id="loginError" role="alert"></p>
+
+      <button class="btn btn--primary btn--block" type="submit" id="loginBtn">Sign in</button>
+
+      <p class="login__hint">
+        Credentials are printed in the server console on first run and can be changed with the
+        <b>ADMIN_USERNAME</b> / <b>ADMIN_PASSWORD</b> environment variables.
+      </p>
+      <a class="login__back" href="/">← Back to the machine</a>
+    </form>
+  </div>
+
+  <!-- ========================== DASHBOARD ========================== -->
+  <div class="dash" id="dashView" hidden>
+    <header class="topbar">
+      <div class="topbar__brand">
+        <span class="topbar__badge">⚙</span>
+        <span>Smart Vending <b>Admin</b></span>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button class="tab is-active" data-tab="products" type="button">Products</button>
+        <button class="tab" data-tab="sales" type="button">Sales &amp; Stock</button>
+        <button class="tab" data-tab="history" type="button">Transactions</button>
+        <button class="tab" data-tab="settings" type="button">Settings</button>
+      </nav>
+
+      <div class="topbar__user">
+        <a class="ghost-link" href="/" target="_blank">Open machine ↗</a>
+        <span class="user-chip" id="userChip">admin</span>
+        <button class="btn btn--ghost" id="logoutBtn" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ---------------------- PRODUCTS ---------------------- -->
+      <section class="tab-panel" id="tab-products">
+        <div class="panel-head">
+          <div>
+            <h2>Products</h2>
+            <p class="muted">Edit names, prices, stock and availability. Changes apply instantly to the machine.</p>
+          </div>
+          <button class="btn btn--primary" id="toggleAddBtn" type="button">+ Add product</button>
+        </div>
+
+        <form class="add-form" id="addForm" hidden>
+          <div class="add-form__grid">
+            <label class="field"><span>Code *</span><input id="f_code" placeholder="D1" maxlength="6" required /></label>
+            <label class="field"><span>Name *</span><input id="f_name" placeholder="Product name" maxlength="80" required /></label>
+            <label class="field"><span>Price (₹) *</span><input id="f_price" type="number" min="0" max="1000" step="1" value="30" required /></label>
+            <label class="field"><span>Stock *</span><input id="f_stock" type="number" min="0" max="9999" value="10" required /></label>
+            <label class="field"><span>Low-stock alert at</span><input id="f_threshold" type="number" min="0" max="9999" value="5" /></label>
+            <label class="field field--check"><span>Availability</span><span class="switch"><input id="f_available" type="checkbox" checked /><i></i><em>Available</em></span></label>
+          </div>
+          <div class="add-form__actions">
+            <button class="btn btn--primary" type="submit">Save product</button>
+            <button class="btn btn--ghost" type="button" id="cancelAddBtn">Cancel</button>
+            <span class="form-error" id="addError" role="alert"></span>
+          </div>
+        </form>
+
+        <div class="table-wrap">
+          <table class="table" id="productsTable">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Price (₹)</th>
+                <th>Stock</th>
+                <th>Alert at</th>
+                <th>Status</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsBody"></tbody>
+          </table>
+        </div>
+        <p class="muted" id="productsEmpty" hidden>No products yet — add your first one.</p>
+      </section>
+
+      <!-- ---------------------- SALES ---------------------- -->
+      <section class="tab-panel" id="tab-sales" hidden>
+        <div class="panel-head"><h2>Sales &amp; Stock</h2><button class="btn btn--ghost" id="refreshStatsBtn" type="button">Refresh</button></div>
+        <div class="stats" id="statsGrid"></div>
+
+        <div class="split">
+          <div class="card">
+            <h3>Top sellers</h3>
+            <ul class="rank" id="topSellers"></ul>
+          </div>
+          <div class="card">
+            <h3>Needs attention</h3>
+            <ul class="rank" id="attentionList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------- TRANSACTIONS ---------------------- -->
+      <section class="tab-panel" id="tab-history" hidden>
+        <div class="panel-head"><h2>Transaction history</h2><button class="btn btn--ghost" id="refreshTxnBtn" type="button">Refresh</button></div>
+        <div class="table-wrap">
+          <table class="table" id="txnTable">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Date &amp; time</th>
+                <th>Code</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Inserted</th>
+                <th>Change</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="txnBody"></tbody>
+          </table>
+        </div>
+        <div class="pager">
+          <button class="btn btn--ghost" id="loadMoreBtn" type="button">Load more</button>
+          <span class="muted" id="txnCount"></span>
+        </div>
+      </section>
+
+      <!-- ---------------------- SETTINGS ---------------------- -->
+      <section class="tab-panel" id="tab-settings" hidden>
+        <div class="panel-head"><h2>Settings</h2></div>
+        <div class="card card--narrow">
+          <h3>Change admin password</h3>
+          <form id="passwordForm" class="stack">
+            <label class="field"><span>Current password</span><input id="curPass" type="password" autocomplete="current-password" required /></label>
+            <label class="field"><span>New password (min 6 characters)</span><input id="newPass" type="password" autocomplete="new-password" minlength="6" required /></label>
+            <div class="add-form__actions">
+              <button class="btn btn--primary" type="submit">Update password</button>
+              <span class="form-error" id="passError" role="alert"></span>
+              <span class="form-ok" id="passOk" role="status"></span>
+            </div>
+          </form>
+        </div>
+        <div class="card card--narrow">
+          <h3>About this machine</h3>
+          <p class="muted">
+            All prices and stock are stored in SQLite and validated on the server.
+            The customer UI never sends prices — the machine always re-checks the price and the
+            available stock inside a single database transaction before dispensing.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

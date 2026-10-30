@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" width="240" height="360" role="img" aria-label="Maaza">
+  
+  <defs>
+    <linearGradient id="body-C2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D9A400"/>
+      <stop offset="18%" stop-color="#F5C400"/>
+      <stop offset="42%" stop-color="#ffe01c"/>
+      <stop offset="62%" stop-color="#F5C400"/>
+      <stop offset="100%" stop-color="#D9A400"/>
+    </linearGradient>
+    <linearGradient id="metal-C2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8d939c"/>
+      <stop offset="35%" stop-color="#f2f4f7"/>
+      <stop offset="70%" stop-color="#c9ced6"/>
+      <stop offset="100%" stop-color="#7d838c"/>
+    </linearGradient>
+    <linearGradient id="shine-C2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="322" rx="66" ry="12" fill="#000" opacity="0.28"/>
+  <path d="M62 78 L120 34 L178 78 Z" fill="#f4f6f8"/>
+  <path d="M62 78 L120 34 L178 78 Z" fill="#000" opacity="0.08"/>
+  <rect x="62" y="78" width="116" height="224" rx="8" fill="url(#body-C2)"/>
+  <rect x="62" y="78" width="116" height="224" rx="8" fill="url(#shine-C2)"/>
+  <rect x="62" y="148" width="116" height="96" fill="#F5C400" opacity="0.95"/>
+  <rect x="62" y="148" width="116" height="6" fill="#ffffff" opacity="0.4"/>
+  <text x="120" y="206" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="#007A3D" letter-spacing="0.5">Maaza</text>
+  <text x="120" y="232" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="13" fill="#007A3D" opacity="0.95">Mango Drink</text>
+  <rect x="72" y="90" width="96" height="6" rx="3" fill="#ffffff" opacity="0.5"/>
+  <g transform="rotate(18 176 120)">
+    <rect x="170" y="60" width="9" height="72" rx="4.5" fill="#f7f8fa"/>
+    <rect x="170" y="60" width="9" height="18" rx="4.5" fill="#e2e5ea"/>
+  </g>
+</svg>

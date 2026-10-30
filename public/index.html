@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Vending Machine Store – an interactive vending machine simulation: insert virtual coins, press a product button and watch your drink get dispensed." />
+  <title>Smart Vending Machine Store</title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+  <link rel="stylesheet" href="/css/machine.css" />
+</head>
+<body>
+  <div class="scene">
+    <div class="machine" id="machine">
+
+      <!-- ============ HEADER ============ -->
+      <header class="machine__header">
+        <div class="brand">
+          <span class="brand__badge" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="34" height="34">
+              <rect x="9" y="6" width="22" height="28" rx="6" fill="#1b6ef3"/>
+              <rect x="9" y="6" width="22" height="28" rx="6" fill="url(#brandShine)"/>
+              <rect x="12" y="15" width="16" height="9" rx="2" fill="#0b1220"/>
+              <defs>
+                <linearGradient id="brandShine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity=".45"/>
+                  <stop offset="45%" stop-color="#ffffff" stop-opacity=".05"/>
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </span>
+          <div class="brand__text">
+            <h1>SMART VENDING</h1>
+            <p>Cold Drinks · Juices · Water · Energy</p>
+          </div>
+        </div>
+
+        <div class="led-strip" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="header__tools">
+          <button class="tool-btn" id="muteBtn" type="button" title="Toggle sound" aria-pressed="false">
+            <span class="tool-btn__icon" id="muteIcon">🔊</span>
+            <span class="tool-btn__label" id="muteLabel">Sound</span>
+          </button>
+          <a class="tool-btn tool-btn--link" href="/admin" title="Open admin dashboard">
+            <span class="tool-btn__icon">⚙️</span>
+            <span class="tool-btn__label">Admin</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- ============ BODY : GLASS + CONTROL PANEL ============ -->
+      <div class="machine__body">
+
+        <!-- Glass display with product grid -->
+        <section class="window" aria-label="Available drinks">
+          <div class="window__inner">
+            <div class="window__grid" id="productGrid">
+              <div class="window__loading" id="windowLoading">
+                <span class="spinner"></span> CONTACTING MACHINE…
+              </div>
+            </div>
+            <div class="window__glare" aria-hidden="true"></div>
+          </div>
+          <div class="window__brand" aria-hidden="true">COLD &amp; FRESH 24×7</div>
+        </section>
+
+        <!-- Control panel -->
+        <aside class="panel" aria-label="Control panel">
+
+          <div class="display" id="display">
+            <div class="display__balance">
+              <span class="display__label">INSERTED AMOUNT</span>
+              <span class="display__value" id="balanceValue">₹0</span>
+            </div>
+            <div class="display__status" id="statusScreen" role="status" aria-live="polite">
+              <p class="status__title" id="statusTitle">WELCOME</p>
+              <p class="status__text" id="statusText">1. Insert coins. 2. Select your drink. 3. Collect your product and change.</p>
+            </div>
+            <div class="display__meta">
+              <span class="meta__change">CHANGE DUE: <b id="changeValue">₹0</b></span>
+              <span class="meta__code">CODE: <b id="codeValue">—</b></span>
+            </div>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Insert coins</h2>
+            <div class="slot">
+              <div class="slot__mouth" id="coinSlot">
+                <span class="slot__ring"></span>
+                <span class="slot__text">COIN SLOT</span>
+              </div>
+              <p class="slot__note">Simulation only — no real coins or cash are accepted.</p>
+            </div>
+            <div class="coinpad" id="coinPad"><!-- denomination buttons injected --></div>
+          </div>
+
+          <div class="panel__section">
+            <h2 class="panel__title">Product keypad</h2>
+            <div class="keypad" id="keypad"><!-- keypad keys injected --></div>
+          </div>
+
+          <div class="panel__actions">
+            <button class="action action--cancel" id="cancelBtn" type="button">
+              <span class="action__icon">↩</span> RETURN COINS / CANCEL
+            </button>
+            <button class="action action--collect" id="collectBtn" type="button">
+              <span class="action__icon">⬇</span> COLLECT &amp; FINISH
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- ============ BASE : DISPENSING BIN ============ -->
+      <footer class="machine__base">
+        <div class="dispense">
+          <div class="dispense__label">DISPENSING BIN</div>
+          <div class="dispense__chamber">
+            <div class="flap" id="flap"><span>PUSH</span></div>
+            <div class="tray" id="tray">
+              <p class="tray__empty" id="trayEmpty">Your drinks will appear here…</p>
+              <ul class="tray__items" id="trayItems"></ul>
+            </div>
+          </div>
+        </div>
+
+        <ol class="howto">
+          <li><b>1.</b> Insert coins</li>
+          <li><b>2.</b> Select your drink</li>
+          <li><b>3.</b> Collect product &amp; change</li>
+        </ol>
+
+        <p class="machine__legal">
+          Smart Vending Machine Store — interactive software simulation. This page does not accept real money.
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Animation layers -->
+  <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+
+  <!-- Toast host -->
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

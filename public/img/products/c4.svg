@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" width="240" height="360" role="img" aria-label="Water">
+  
+  <defs>
+    <linearGradient id="body-C4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a8dcf7"/>
+      <stop offset="18%" stop-color="#dff3ff"/>
+      <stop offset="42%" stop-color="#fbffff"/>
+      <stop offset="62%" stop-color="#dff3ff"/>
+      <stop offset="100%" stop-color="#a8dcf7"/>
+    </linearGradient>
+    <linearGradient id="metal-C4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8d939c"/>
+      <stop offset="35%" stop-color="#f2f4f7"/>
+      <stop offset="70%" stop-color="#c9ced6"/>
+      <stop offset="100%" stop-color="#7d838c"/>
+    </linearGradient>
+    <linearGradient id="shine-C4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="332" rx="56" ry="11" fill="#000" opacity="0.28"/>
+  <rect x="98" y="30" width="44" height="30" rx="7" fill="#00A3E0"/>
+  <rect x="98" y="38" width="44" height="6" fill="#ffffff" opacity="0.35"/>
+  <path d="M104 60 h32 v22 c0 10 26 16 26 44 v150 c0 14 -12 24 -26 24 h-32 c-14 0 -26 -10 -26 -24 v-150 c0 -28 26 -34 26 -44 z"
+        fill="url(#body-C4)"/>
+  <path d="M104 60 h32 v22 c0 10 26 16 26 44 v150 c0 14 -12 24 -26 24 h-32 c-14 0 -26 -10 -26 -24 v-150 c0 -28 26 -34 26 -44 z"
+        fill="url(#shine-C4)" opacity="0.9"/>
+  <rect x="66" y="168" width="108" height="86" fill="#00A3E0" opacity="0.9"/>
+  <rect x="66" y="168" width="108" height="6" fill="#ffffff" opacity="0.4"/>
+  <text x="120" y="212" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" letter-spacing="0.5">Water</text>
+  <text x="120" y="242" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" opacity="0.95">500 ml</text>
+</svg>

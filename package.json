@@ -1,0 +1,40 @@
+{
+  "name": "smart-vending-machine-store",
+  "version": "1.0.0",
+  "description": "A complete Smart Vending Machine Store web application - software simulation of a real vending machine with coin insertion, product selection, dispensing animation, change/refund, stock management and an admin dashboard.",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "seed-images": "node scripts/generate-images.js",
+    "validate": "node scripts/validate-frontend.js",
+    "test": "node tests/api.test.js",
+    "test:pg": "node scripts/test-pg.js",
+    "test:ui": "node tests/ui.test.js",
+    "test:all": "node tests/api.test.js && node scripts/validate-frontend.js && node tests/ui.test.js",
+    "reset-db": "node scripts/reset-db.js",
+    "db:inspect": "node scripts/inspect-db.js"
+  },
+  "keywords": [
+    "vending-machine",
+    "simulation",
+    "express",
+    "sqlite",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.23.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.11",
+    "@electric-sql/pglite-socket": "^0.2.14",
+    "playwright-core": "^1.64.1"
+  }
+}
